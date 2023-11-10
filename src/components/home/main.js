@@ -27,7 +27,7 @@ const Main = ({ client }) => {
     const [content, setContent] = useState("");
     const [obj_data, setData] = useState([]);
     const [note, setNote] = useState({});
-    const [isEditForm, setIsEditForm] = useState('false');
+    const [isEditForm, setIsEditForm] = useState(false);
     const [open_form, setOpenForm] = useState(false);
 
     const deleteItem = (e, id) => {
@@ -38,25 +38,32 @@ const Main = ({ client }) => {
     }
 
     const renderNoteForm = () => {
-        return setOpenForm(!open_form);
+        setOpenForm(!open_form);
     }
 
-    const editForm = (e, id) => {
+    const onClickEdit = (e, id) => {
         e.preventDefault();
         client.get(`/note/${id}`)
         .then(res => {
-            setContent(res.data.content);
             setTitle(res.data.title);
+            setContent(res.data.content);
         })
         .catch(err => err);
         renderNoteForm();
         setIsEditForm(true);
-        // client.put(`/note/${id}`, {
-        //     title: title,
-        //     content: content
-        // })
-        // .then(res => res)
-        // .catch(err => err);
+    }
+
+    const editForm = (e, id) => {
+        e.preventDefault();
+        client.put(`/note/${id}`, {
+            title: title,
+            content: content
+        })
+        .then(res => {
+            renderNoteForm();
+            setNote("");
+        })
+        .catch(err => err);
     }
 
     const submitNoteForm = (e) => {
@@ -90,10 +97,14 @@ const Main = ({ client }) => {
         {open_form ? (
             <div className="note-form-container">
                 <NoteForm
+                    id={ note.id }
                     title={ title }
-                    setTitle={ setTitle }
                     content={ content }
+                    setTitle={ setTitle }
+                    editForm={ editForm }
                     setContent={ setContent }
+                    isEditForm={ isEditForm }
+                    setIsEditForm= { setIsEditForm }
                     renderNoteForm={ renderNoteForm }
                     submitNoteForm={ submitNoteForm }
                 />
@@ -122,7 +133,7 @@ const Main = ({ client }) => {
                     <>
                         <div className="main-title">
                             <h5 className="note-topic">{ note.title }</h5>
-                            <a onClick={ (e) => editForm(e, note.id) } >Edit</a>
+                            <a onClick={ (e) => onClickEdit(e, note.id) } >Edit</a>
                         </div>
                         <div className='main-content'>
                             <p>{ note.content }</p>
