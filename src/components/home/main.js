@@ -73,6 +73,12 @@ const Main = ({ client }) => {
         setIsEditForm(false);
     }
 
+    const renderTopics = () => {
+        let obj = document.querySelector("aside");
+        obj.style.display = 'none';
+        obj.classList.add("main-op");
+    }
+
     useEffect(() => {
         client.get("/note/all")
         .then(res => setData(res.data))
@@ -124,7 +130,7 @@ const Main = ({ client }) => {
                     </>
                 // ) : <p className="empty-topic">No Topics to display</p>
             }
-            <a className="back-to-topic">Back to Topics</a>
+            <a className="back-to-topic" onClick={ renderTopics }>Back to Topics</a>
         </main>
         </div>
         )}

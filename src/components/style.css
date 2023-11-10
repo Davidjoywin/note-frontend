@@ -212,9 +212,7 @@ main .main-content {
 }
 
 .back-to-topic {
-    position: absolute;
-    margin: 5px 0;
-    right: 2rem;
+    display: none;
 }
 
 .auth-container {
@@ -326,8 +324,16 @@ input[type=submit]:hover, a:hover, button[type=submit]
         grid-template-columns: 75%;
     }
 
-    .aside {
+    .main {
         display: none;
+    }
+
+    .main-op {
+        display: block;
+    }
+
+    .aside-op {
+        display: none !important;
     }
 
     header {
@@ -340,5 +346,13 @@ input[type=submit]:hover, a:hover, button[type=submit]
 
     .login-container form input {
         width: 65vw;
+    }
+
+    .back-to-topic {
+        display: block;
+        position: absolute;
+        margin: 5px 0;
+        right: 2rem;
+        cursor: pointer;
     }
 }
