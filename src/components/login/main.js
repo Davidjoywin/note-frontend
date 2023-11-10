@@ -8,31 +8,40 @@ const Main = ({ client, setCurrentUser }) => {
 
     const submitLogin = (e) => {
         e.preventDefault()
-        client.post(
-            '/account/login',
-            {
-                username: username,
-                password: password
-            })
-            .then(res => {
-                console.log(res);
-                setCurrentUser(true);
-                console.log(username);
-            }).catch(err => console.log(err));
+        // client.post(
+        //     '/account/login',
+        //     {
+        //         username: username,
+        //         password: password
+        //     })
+        //     .then(res => {
+        //         console.log(res);
+        //         setCurrentUser(true);
+        //         console.log(username);
+        //     }).catch(err => console.log(err));
+        fetch("http://127.0.0.1:8000/account/login", {
+            method: 'POST',
+            headers: {"content-type": "application/json"},
+            body: JSON.stringify({"username": username, "password": password})
+        }).then(res => setCurrentUser(true))
+        .catch(err => {
+            setCurrentUser(false);
+            console.log(err);
+        });
         }
 
 
-    useEffect(() => {
-        client.get("/account/user")
-        .then((res) => {
-            setCurrentUser(true);
-            console.log(res);
-        })
-        .catch((err) => {
-            setCurrentUser(false);
-            console.log(err);
-        })
-    }, [])
+    // useEffect(() => {
+    //     client.get("/account/user")
+    //     .then((res) => {
+    //         setCurrentUser(true);
+    //         console.log(res);
+    //     })
+    //     .catch((err) => {
+    //         setCurrentUser(false);
+    //         console.log("This error is from login component");
+    //     })
+    // }, [])
     
     return (
         <>

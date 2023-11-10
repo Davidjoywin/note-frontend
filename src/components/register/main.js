@@ -79,7 +79,7 @@ const Main = ({ client, setCurrentUser }) => {
                         required
                     />
                 </div> */}
-                <button className="submit-bttn">Register</button>
+                <button className="submit-bttn" type="submit" >Register</button>
             </form>
         </>
     )

@@ -36,9 +36,7 @@ const App = () => {
         .catch(err => console.log(err));
     }
 
-    console.log(currentUser);
-    if (currentUser) {
-        console.log(`this from inside the home function ${currentUser}`)
+    if (!currentUser) {
         return (
             <Home
                 client={ client }
